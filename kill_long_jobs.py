@@ -47,6 +47,7 @@ if __name__ == "__main__":
     log_file_path = "log_file.txt"
 
     #read credentials from the config file
+    #setup these values in the config.ini file template provided on the project
     config = configparser.ConfigParser()
     config.read('config.ini')
     name = config.get('tableau', 'name')
