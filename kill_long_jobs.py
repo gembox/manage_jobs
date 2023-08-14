@@ -66,7 +66,7 @@ if __name__ == "__main__":
         req.filter.add(TSC.Filter("status", TSC.RequestOptions.Operator.Equals, "InProgress"))
         target_jobs = (job for job in TSC.Pager(server.jobs, request_opts=req) )
 
-        with open('jobs.txt', 'w') as f:
+        with open('jobs.txt', 'a') as f:
             for job in target_jobs: 
                 if job.type == 'run_flow':
                     f.write(f"{job.type}, {job.name}, {job.id}, {job.status}, {job.started_at}, {job.ended_at}\n")
