@@ -7,11 +7,8 @@
 import datetime
 import pytz
 import tableauserverclient as TSC
-import truststore
 import os
 import configparser
-
-truststore.inject_into_ssl()
 
 def calculate_duration_from_utc(start_datetime_utc):
     start_datetime_utc = datetime.datetime.strptime(start_datetime_utc, "%Y-%m-%d %H:%M:%S%z")
