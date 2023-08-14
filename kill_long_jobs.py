@@ -7,8 +7,11 @@
 import datetime
 import pytz
 import tableauserverclient as TSC
+import truststore
 import os
 import configparser
+
+truststore.inject_into_ssl()
 
 def calculate_duration_from_utc(start_datetime_utc):
     start_datetime_utc = datetime.datetime.strptime(start_datetime_utc, "%Y-%m-%d %H:%M:%S%z")
@@ -44,7 +47,6 @@ if __name__ == "__main__":
     log_file_path = "log_file.txt"
 
     #read credentials from the config file
-    #setup these values in the config.ini file template provided on the project
     config = configparser.ConfigParser()
     config.read('config.ini')
     name = config.get('tableau', 'name')
@@ -93,10 +95,11 @@ if __name__ == "__main__":
                     if entry["status"] == "InProgress":
                         duration = calculate_duration_from_utc(entry["start_time"])
                         print("Duration:", duration)
-                        if duration > datetime.timedelta(minutes=timeout):
+                        if duration > datetime.timedelta(minutes=int(timeout)):
                             # Cancel the job with the given run ID, if greater than our cogured timeout
                             server.jobs.cancel(entry["run_id"])
                             entry["status"] = "Cancelled" #update the status of the job in the parsed data
+                            cancellation_time = datetime.datetime.now(pytz.utc)
                             entry["end_time"] = cancellation_time.strftime("%Y-%m-%d %H:%M:%S%z")  # Update end time to the time of cancellation
                 
                             #write the job back to the parsed file
