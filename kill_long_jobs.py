@@ -16,30 +16,6 @@ def calculate_duration_from_utc(start_datetime_utc):
     duration = current_datetime_utc - start_datetime_utc
     return duration
 
-def parse_log_data(log_data):
-    log_entries = log_data.strip().split('\n')
-    parsed_data = []
-
-    for entry in log_entries:
-        fields = entry.split(', ')
-        action = fields[0]
-        run_id = fields[2]
-        status = fields[3]
-        start_time = fields[4]
-        end_time = fields[5]
-
-        parsed_entry = {
-            "action": action,
-            "run_id": run_id,
-            "status": status,
-            "start_time": start_time,
-            "end_time": end_time
-        }
-
-        parsed_data.append(parsed_entry)
-
-    return parsed_data
-
 if __name__ == "__main__":
     try: 
         log_file_path = "log_file.txt"
