@@ -18,8 +18,6 @@ def calculate_duration_from_utc(start_datetime_utc):
 
 if __name__ == "__main__":
     try: 
-        log_file_path = "log_file.txt"
-
         #read credentials from the config file
         config = configparser.ConfigParser()
         config.read('config.ini')
